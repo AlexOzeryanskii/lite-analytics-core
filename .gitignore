@@ -1,5 +1,39 @@
-.venv/
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Databases
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+tests/_pytest.db
+
+# Logs
+*.log
+logs/
+
+# Python
 __pycache__/
-analytics.db
-analytics.db-wal
-analytics.db-shm
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+dist/
+build/
+*.egg-info/
+
+# IDE and OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Pytest cache artifacts
+pytest-cache-files-*/

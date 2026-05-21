@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ stats.project_name }} — Lite Analytics</title>
+    <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+<body>
+    <div class="layout">
+        <header class="header">
+            <div>
+                <p class="eyebrow">Lite Analytics Core</p>
+                <h1>{{ stats.project_name }}</h1>
+                <p class="subtitle">Project key: <code>{{ stats.project_key }}</code></p>
+            </div>
+            <div class="badge">MVP Dashboard</div>
+        </header>
+
+        <section class="metrics">
+            <article class="card">
+                <span class="label">Total events</span>
+                <strong class="value">{{ stats.total_events }}</strong>
+            </article>
+            <article class="card">
+                <span class="label">Unique visitors</span>
+                <strong class="value accent">{{ stats.unique_visitors }}</strong>
+            </article>
+            <article class="card">
+                <span class="label">Events today</span>
+                <strong class="value">{{ stats.events_today }}</strong>
+            </article>
+            <article class="card">
+                <span class="label">Last 7 days</span>
+                <strong class="value">{{ stats.events_last_7_days }}</strong>
+            </article>
+            <article class="card">
+                <span class="label">Active push subscriptions</span>
+                <strong class="value accent">{{ stats.active_push_subscriptions }}</strong>
+            </article>
+        </section>
+
+        <section class="grid">
+            <article class="panel">
+                <h2>Top pages</h2>
+                <ul class="list">
+                    {% for item in stats.top_paths %}
+                    <li><span class="mono">{{ item.value }}</span><span class="count">{{ item.count }}</span></li>
+                    {% else %}
+                    <li class="empty">No data yet</li>
+                    {% endfor %}
+                </ul>
+            </article>
+
+            <article class="panel">
+                <h2>Top referrers</h2>
+                <ul class="list">
+                    {% for item in stats.top_referrers %}
+                    <li><span class="mono">{{ item.value }}</span><span class="count">{{ item.count }}</span></li>
+                    {% else %}
+                    <li class="empty">No data yet</li>
+                    {% endfor %}
+                </ul>
+            </article>
+
+            <article class="panel">
+                <h2>Events by type</h2>
+                <ul class="list">
+                    {% for item in stats.events_by_type %}
+                    <li><span>{{ item.value }}</span><span class="count">{{ item.count }}</span></li>
+                    {% else %}
+                    <li class="empty">No data yet</li>
+                    {% endfor %}
+                </ul>
+            </article>
+        </section>
+
+        <section class="panel full">
+            <h2>Recent events</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Type</th>
+                            <th>Path</th>
+                            <th>Title</th>
+                            <th>Referrer</th>
+                            <th>Visitor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for event in stats.recent_events %}
+                        <tr>
+                            <td>{{ event.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td><span class="pill">{{ event.event_type }}</span></td>
+                            <td class="mono">{{ event.path }}</td>
+                            <td>{{ event.title or '—' }}</td>
+                            <td class="mono">{{ event.referrer or '—' }}</td>
+                            <td class="mono">{{ event.visitor_id or '—' }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6" class="empty">No events recorded yet</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
